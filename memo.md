@@ -128,3 +128,11 @@ internal/service
 •業務ルール
 •状態の初期値など
 func (s *RequestService) Create(title, description string) (*model.Request, error)
+
+internal/handler
+
+役割
+•HTTPリクエストを受ける
+•JSON変換
+•ステータスコード
+func (h *RequestHandler) Create(w http.ResponseWriter, r *http.Request)

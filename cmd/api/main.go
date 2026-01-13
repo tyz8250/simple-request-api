@@ -1,19 +1,16 @@
 package main
 
 import (
-	"fmt"
-	"time"
+	"log"
+	"net/http"
 
-	"github.com/ricosh/simple-request-api/internal/model"
+	"github.com/ricosh/simple-request-api/internal/handler"
 )
 
 func main() {
-	req := model.Request{
-		ID:          1,
-		Title:       "住民票の申請",
-		Description: "引っ越しに伴う申請",
-		Status:      "pending",
-		CreatedAt:   time.Now(),
-	}
-	fmt.Println(req)
+	requestHandler := &handler.RequestHandler{}
+
+	http.HandleFunc("/requests", requestHandler.GetRequests)
+	log.Println("Server started af :8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

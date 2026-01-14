@@ -1,24 +1,21 @@
 package request_service
 
 import (
-	"time"
-
 	"github.com/ricosh/simple-request-api/internal/model"
+	"github.com/ricosh/simple-request-api/internal/repository"
 )
 
+// RequestService はリクエストに関するビジネスロジックを提供します。
 type RequestService struct {
+	repo repository.RequestRepository
 }
 
-// GetAll 関数がすべてのリクエストを取得する。
+// NewRequestService は、新しい RequestService を作成します。
+func NewRequestService(repo repository.RequestRepository) *RequestService {
+	return &RequestService{repo: repo}
+}
+
+// GetAll は、すべてのリクエストを取得します。
 func (s *RequestService) GetAll() ([]model.Request, error) {
-	requests := []model.Request{
-		{
-			ID:          1,
-			Title:       "住民票申請",
-			Description: "引っ越しに伴う申請",
-			Status:      "pending",
-			CreatedAt:   time.Now(),
-		},
-	}
-	return requests, nil
+	return s.repo.FindAll()
 }

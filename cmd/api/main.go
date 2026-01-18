@@ -14,7 +14,16 @@ func main() {
 	service := request_service.NewRequestService(repo)
 	handler := handler.NewRequestHandler(service)
 
-	http.HandleFunc("/requests", handler.GetRequests)
+	http.HandleFunc("/requests", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodGet:
+			handler.GetRequests(w, r)
+		case http.MethodPost:
+			handler.CreateRequest(w, r)
+		default:
+			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		}
+	})
 
 	log.Println("Server started at :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

@@ -29,3 +29,8 @@ func (s *RequestService) Create(title, description string) (*model.Request, erro
 	}
 	return s.repo.Create(req)
 }
+
+// GetByID は、指定されたIDのリクエストを取得します。
+func (s *RequestService) GetByID(id int64) (model.Request, error) {
+	return s.repo.FindByID(id)
+}

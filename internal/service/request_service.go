@@ -19,3 +19,13 @@ func NewRequestService(repo repository.RequestRepository) *RequestService {
 func (s *RequestService) GetAll() ([]model.Request, error) {
 	return s.repo.FindAll()
 }
+
+// Create は、新しいリクエストを保存します。
+func (s *RequestService) Create(title, description string) (*model.Request, error) {
+	req := model.Request{
+		Title:       title,
+		Description: description,
+		Status:      "pending",
+	}
+	return s.repo.Create(req)
+}

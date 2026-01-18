@@ -11,6 +11,13 @@ type MemoryRequestRepository struct {
 	requests []model.Request
 }
 
+// Create
+func (r *MemoryRequestRepository) Create(req model.Request) (*model.Request, error) {
+	req.ID = int64(len(r.requests) + 1)
+	r.requests = append(r.requests, req)
+	return &req, nil
+}
+
 // NewMemoryRequestRepository は新しい MemoryRequestRepository を作成します。
 func NewMemoryRequestRepository() *MemoryRequestRepository {
 	return &MemoryRequestRepository{

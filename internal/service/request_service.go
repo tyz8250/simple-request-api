@@ -20,17 +20,12 @@ func (s *RequestService) GetAll() ([]model.Request, error) {
 	return s.repo.FindAll()
 }
 
-// Create は、新しいリクエストを保存します。
-func (s *RequestService) Create(title, description string) (*model.Request, error) {
-	req := model.Request{
-		Title:       title,
-		Description: description,
-		Status:      "pending",
-	}
-	return s.repo.Create(req)
-}
-
 // GetByID は、指定されたIDのリクエストを取得します。
 func (s *RequestService) GetByID(id int64) (model.Request, error) {
 	return s.repo.FindByID(id)
+}
+
+func (s *RequestService) Create(req *model.Request) error {
+	req.Status = "pending"
+	return s.repo.Create(req)
 }

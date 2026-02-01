@@ -2,6 +2,7 @@ package repository
 
 import (
 	"errors"
+	"time"
 
 	"github.com/ricosh/simple-request-api/internal/model"
 )
@@ -9,13 +10,6 @@ import (
 // MemoryRequestRepository は RequestRepository のインメモリ実装です。
 type MemoryRequestRepository struct {
 	requests []model.Request
-}
-
-// Create
-func (r *MemoryRequestRepository) Create(req model.Request) (*model.Request, error) {
-	req.ID = int64(len(r.requests) + 1)
-	r.requests = append(r.requests, req)
-	return &req, nil
 }
 
 // NewMemoryRequestRepository は新しい MemoryRequestRepository を作成します。
@@ -45,4 +39,12 @@ func (r *MemoryRequestRepository) FindByID(id int64) (model.Request, error) {
 		}
 	}
 	return model.Request{}, errors.New("request not found")
+}
+
+func (r *MemoryRequestRepository) Create(req *model.Request) error {
+	req.ID = int64(len(r.requests) + 1)
+	req.CreatedAt = time.Now()
+
+	r.requests = append(r.requests, *req)
+	return nil
 }

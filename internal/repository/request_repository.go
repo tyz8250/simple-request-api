@@ -9,5 +9,5 @@ type RequestRepository interface {
 	FindAll() ([]model.Request, error)
 	FindByID(id int64) (model.Request, error)
 	// Create：新しいリクエストを保存する
-	Create(req model.Request) (*model.Request, error)
+	Create(req *model.Request) error
 }

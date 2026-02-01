@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/ricosh/simple-request-api/internal/model"
 	request_service "github.com/ricosh/simple-request-api/internal/service"
 )
 
@@ -48,15 +49,19 @@ func (h *RequestHandler) CreateRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req, err := h.service.Create(input.Title, input.Description)
-	if err != nil {
+	created := &model.Request{
+		Title:       input.Title,
+		Description: input.Description,
+	}
+
+	if err := h.service.Create(created); err != nil {
 		http.Error(w, "failed to create request", http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(req)
+	json.NewEncoder(w).Encode(created)
 }
 func (h *RequestHandler) GetRequestByID(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {

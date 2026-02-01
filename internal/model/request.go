@@ -6,9 +6,9 @@ import "time"
 // Status は、request の状態を表します。例: "pending", "approved", "rejected"
 
 type Request struct {
-	ID          int64
-	Title       string
-	Description string
-	Status      string
-	CreatedAt   time.Time // request が作成された日時。自動でjsonに変換される。
+	ID          int64     `json:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Status      string    `json:"status"`
+	CreatedAt   time.Time `json:"created_at"`
 }
